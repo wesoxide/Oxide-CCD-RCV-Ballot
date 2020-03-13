@@ -13,8 +13,10 @@ const ballot: BallotContextInterface = {
   resetBallot: () => undefined,
   setUserSettings: () => undefined,
   updateVote: () => undefined,
+  updateRank: () => undefined,
   userSettings: { textSize: GLOBALS.TEXT_SIZE as TextSizeSetting },
   votes: {},
+  ranks: {},
 }
 
 const BallotContext = createContext(ballot)

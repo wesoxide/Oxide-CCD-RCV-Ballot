@@ -2,12 +2,18 @@ import React, { useContext } from 'react'
 import { Redirect, RouteComponentProps } from 'react-router-dom'
 import styled from 'styled-components'
 
-import { CandidateVote, OptionalYesNoVote } from '../config/types'
+import {
+  CandidateVote,
+  RankCandidateVote,
+  RanksVote,
+  OptionalYesNoVote,
+} from '../config/types'
 
 import BallotContext from '../contexts/ballotContext'
 
 import ButtonBar from '../components/ButtonBar'
 import CandidateContest from '../components/CandidateContest'
+import RankContest from '../components/RankContest'
 import LinkButton from '../components/LinkButton'
 import Text from '../components/Text'
 import YesNoContest from '../components/YesNoContest'
@@ -22,9 +28,15 @@ interface ContestParams {
 
 const ContestPage = (props: RouteComponentProps<ContestParams>) => {
   const { contestNumber } = props.match.params
-  const { election, updateVote, votes, contests, resetBallot } = useContext(
-    BallotContext
-  )
+  const {
+    election,
+    updateVote,
+    updateRank,
+    votes,
+    ranks,
+    contests,
+    resetBallot,
+  } = useContext(BallotContext)
 
   const { bmdConfig } = election!
   const { showHelpPage, showSettingsPage } = bmdConfig!
@@ -42,9 +54,14 @@ const ContestPage = (props: RouteComponentProps<ContestParams>) => {
   const nextContestIndex = currentContestIndex + 1
   const nextContest = contests[nextContestIndex]
   const vote = votes[contest.id]
+  const rank = ranks[contest.id]
   let isVoteComplete = !!vote
   if (contest.type === 'candidate') {
     isVoteComplete = contest.seats === ((vote as CandidateVote) || []).length
+  }
+  if (contest.type === 'rank') {
+    isVoteComplete =
+      contest.seats === ((vote as RankCandidateVote) || []).length
   }
   const isReviewMode = window.location.hash === '#review'
   // TODO:
@@ -60,6 +77,18 @@ const ContestPage = (props: RouteComponentProps<ContestParams>) => {
           parties={election!.parties}
           vote={(vote || []) as CandidateVote}
           updateVote={updateVote}
+        />
+      )}
+      {contest.type === 'rank' && (
+        <RankContest
+          aria-live="assertive"
+          key={contest.id}
+          contest={contest}
+          parties={election!.parties}
+          vote={(vote || []) as RankCandidateVote}
+          rank={(rank || []) as RanksVote}
+          updateVote={updateVote}
+          updateRank={updateRank}
         />
       )}
       {contest.type === 'yesno' && (

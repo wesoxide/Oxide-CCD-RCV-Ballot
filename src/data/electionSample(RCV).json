@@ -1,0 +1,157 @@
+{
+  "title": "2020 General Election",
+  "state": "State of Hamilton",
+  "county": {
+    "id": "franklin",
+    "name": "Franklin County"
+  },
+  "date": "Tuesday, November 3, 2020",
+  "ballotTrackerConfig": {
+    "trackerType": "electionguard",
+    "trackerSiteDisplay": "electionguard.vote",
+    "trackerUrlTemplate": "https://electionguard.vote/track/<tracker_id>"
+  },
+  "districts": [
+    {
+      "id": "district-1",
+      "name": "District 1"
+    },
+    {
+      "id": "district-2",
+      "name": "District 2"
+    },
+    {
+      "id": "district-3",
+      "name": "District 3"
+    },
+    {
+      "id": "7",
+      "name": "District 7"
+    }
+  ],
+  "parties": [
+    {
+      "id": "0",
+      "name": "Federalist",
+      "abbrev": "F"
+    },
+    {
+      "id": "1",
+      "name": "Populist",
+      "abbrev": "P"
+    },
+    {
+      "id": "2",
+      "name": "Unity",
+      "abbrev": "U"
+    },
+    {
+      "id": "3",
+      "name": "Constitution",
+      "abbrev": "C"
+    },
+    {
+      "id": "4",
+      "name": "Whig",
+      "abbrev": "W"
+    },
+    {
+      "id": "5",
+      "name": "Labor",
+      "abbrev": "La"
+    },
+    {
+      "id": "6",
+      "name": "Independent",
+      "abbrev": "I"
+    }
+  ],
+  "contests": [
+    {
+      "id": "mayor",
+      "districtId": "district-1",
+      "type": "rank",
+      "section": "Local",
+      "title": "Mayor",
+      "seats": 7,
+      "candidates": [
+        {
+          "id": "chun",
+          "name": "Jin Chun",
+          "partyId": "0",
+          "rank": ""
+        },
+        {
+          "id": "patterson",
+          "name": "Emma Jane Patterson",
+          "partyId": "1",
+          "rank": ""
+        },
+        {
+          "id": "shamoos",
+          "name": "Abdul Shamoos",
+          "partyId": "6",
+          "rank": ""
+        },
+        {
+          "id": "jackson",
+          "name": "Keisha Jackson",
+          "partyId": "3",
+          "rank": ""
+        },
+        {
+          "id": "hildebrand-macdougall",
+          "name": "Ashley Hildebrand-McDougall",
+          "partyId": "4",
+          "rank": ""
+        },
+        {
+          "id": "sabor",
+          "name": "Christiana Sabor",
+          "partyId": "2",
+          "rank": ""
+        },
+        {
+          "id": "brown-rudwig",
+          "name": "Jamieson Brown-Rudwig",
+          "partyId": "5",
+          "rank": ""
+        }
+      ],
+      "allowWriteIns": false
+    }
+  ],
+  "precincts": [
+    {
+      "id": "23",
+      "name": "Center Springfield"
+    },
+    {
+      "id": "21",
+      "name": "North Springfield"
+    },
+    {
+      "id": "20",
+      "name": "South Springfield"
+    }
+  ],
+  "ballotStyles": [
+    {
+      "id": "12",
+      "precincts": ["23", "21"],
+      "districts": ["district-1", "district-2"]
+    },
+    {
+      "id": "5",
+      "precincts": ["21"],
+      "districts": ["district-1"]
+    },
+    {
+      "id": "7C",
+      "partyId": "3",
+      "precincts": ["20"],
+      "districts": ["7"]
+    }
+  ],
+  "sealURL": "/seals/Sample-Seal.svg"
+}

@@ -9,6 +9,9 @@ import {
   Candidate,
   CandidateContest,
   CandidateVote,
+  RankCandidate,
+  RankContest,
+  RankCandidateVote,
   Contests,
   OptionalYesNoVote,
   Parties,
@@ -189,6 +192,49 @@ const CandidateContestResult = ({
   )
 }
 
+const RankContestResult = ({
+  contest,
+  parties,
+  vote = [],
+}: {
+  contest: RankContest
+  parties: Parties
+  vote: RankCandidateVote
+}) => {
+  const remainingChoices = contest.seats - vote.length
+  return vote === undefined || vote.length === 0 ? (
+    <NoSelection />
+  ) : (
+    <React.Fragment>
+      {vote.map(
+        (candidate: RankCandidate, index: number, array: RankCandidateVote) => {
+          const party =
+            candidate.partyId && findPartyById(parties, candidate.partyId)
+          return (
+            <Text
+              key={candidate.id}
+              aria-label={`${candidate.name}${party && `, ${party.name}`}${
+                candidate.isWriteIn ? `, write-in` : ''
+              }${array.length - 1 === index ? '.' : ','}`}
+              wordBreak
+              voteIcon
+            >
+              <strong>{candidate.name}</strong> {party && `/ ${party.name}`}
+              {candidate.isWriteIn && `(write-in)`}
+            </Text>
+          )
+        }
+      )}
+      {!!remainingChoices && (
+        <Text bold warning warningIcon wordBreak>
+          You may select {remainingChoices} more{' '}
+          {pluralize('candidate', remainingChoices)}.
+        </Text>
+      )}
+    </React.Fragment>
+  )
+}
+
 const YesNoContestResult = (props: {
   contest: YesNoContest
   vote: OptionalYesNoVote
@@ -337,6 +383,13 @@ class ReviewPage extends React.Component<RouteComponentProps, State> {
                           contest={contest}
                           parties={parties}
                           vote={votes[contest.id] as CandidateVote}
+                        />
+                      )}
+                      {contest.type === 'rank' && (
+                        <RankContestResult
+                          contest={contest}
+                          parties={parties}
+                          vote={votes[contest.id] as RankCandidateVote}
                         />
                       )}
                       {contest.type === 'yesno' && (

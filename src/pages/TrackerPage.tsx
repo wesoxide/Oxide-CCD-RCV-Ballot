@@ -141,11 +141,13 @@ class TrackerPage extends React.Component<RouteComponentProps, State> {
     const {
       election: { ballotTrackerConfig },
       votes,
+      //ranks,
     } = this.context
 
     const tracker = await encryptAndGetTracker(
       ballotTrackerConfig.trackerType,
       votes
+      //ranks
     )
     this.setState({ tracker })
   }

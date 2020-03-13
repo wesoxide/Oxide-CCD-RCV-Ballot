@@ -23,11 +23,13 @@ import {
   ElectionDefaults,
   OptionalElection,
   OptionalVote,
+  OptionalRank,
   PartialUserSettings,
   TextSizeSetting,
   UserSettings,
   VoterCardData,
   VotesDict,
+  RanksDict,
 } from './config/types'
 
 import Ballot from './components/Ballot'
@@ -52,11 +54,13 @@ interface State {
   precinctId: string
   userSettings: UserSettings
   votes: VotesDict
+  ranks: RanksDict
 }
 
 export const electionKey = 'election'
 export const activationStorageKey = 'activation'
 export const votesStorageKey = 'votes'
+export const ranksStorageKey = 'ranks'
 const removeElectionShortcuts = ['mod+k']
 
 const initialState = {
@@ -67,6 +71,7 @@ const initialState = {
   precinctId: '',
   userSettings: { textSize: GLOBALS.TEXT_SIZE as TextSizeSetting },
   votes: {},
+  ranks: {},
 }
 
 interface CompleteCardData {
@@ -223,6 +228,7 @@ export class App extends React.Component<RouteComponentProps, State> {
         election,
         precinctId,
         votes: this.getVotes(),
+        ranks: this.getRanks(),
       })
     }
     Mousetrap.bind(removeElectionShortcuts, this.reset)
@@ -270,6 +276,11 @@ export class App extends React.Component<RouteComponentProps, State> {
     return votesData ? JSON.parse(votesData) : {}
   }
 
+  public getRanks = () => {
+    const ranksData = window.localStorage.getItem(ranksStorageKey)
+    return ranksData ? JSON.parse(ranksData) : {}
+  }
+
   public setVotes = (votes: VotesDict) => {
     /* istanbul ignore else */
     if (process.env.NODE_ENV !== 'production') {
@@ -277,9 +288,17 @@ export class App extends React.Component<RouteComponentProps, State> {
     }
   }
 
+  public setRanks = (ranks: RanksDict) => {
+    /* istanbul ignore else */
+    if (process.env.NODE_ENV !== 'production') {
+      window.localStorage.setItem(ranksStorageKey, JSON.stringify(ranks))
+    }
+  }
+
   public resetVoterData = () => {
     window.localStorage.removeItem(activationStorageKey)
     window.localStorage.removeItem(votesStorageKey)
+    window.localStorage.removeItem(ranksStorageKey)
   }
 
   public reset = /* istanbul ignore next - triggering keystrokes issue - https://github.com/votingworks/bmd/issues/62 */ () => {
@@ -296,6 +315,17 @@ export class App extends React.Component<RouteComponentProps, State> {
       }),
       () => {
         this.setVotes(this.state.votes)
+      }
+    )
+  }
+
+  public updateRank = (contestId: string, rank: OptionalRank) => {
+    this.setState(
+      prevState => ({
+        ranks: { ...prevState.ranks, [contestId]: rank },
+      }),
+      () => {
+        this.setRanks(this.state.ranks)
       }
     )
   }
@@ -381,8 +411,10 @@ export class App extends React.Component<RouteComponentProps, State> {
               resetBallot: this.resetBallot,
               setUserSettings: this.setUserSettings,
               updateVote: this.updateVote,
+              updateRank: this.updateRank,
               userSettings: this.state.userSettings,
               votes: this.state.votes,
+              ranks: this.state.ranks,
             }}
           >
             <Ballot />

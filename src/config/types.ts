@@ -19,8 +19,26 @@ export interface Candidate {
 }
 export type OptionalCandidate = Candidate | undefined
 
+//RankCandidates
+export interface RankCandidate {
+  readonly id: string
+  readonly name: string
+  readonly partyId?: string
+  rank: string
+  isWriteIn?: boolean
+}
+export type OptionalRankCandidate = RankCandidate | undefined
+
+//Ranks
+export interface Ranks extends RankCandidate {
+  readonly rank: string
+  readonly id: string
+}
+export type OptionalRanks = Ranks | undefined
+//export type OptionalRankCandidate = RankCandidate | Ranks | undefined
+
 // Contests
-export type ContestTypes = 'candidate' | 'yesno'
+export type ContestTypes = 'candidate' | 'rank' | 'yesno'
 export interface Contest {
   readonly id: string
   readonly districtId: string
@@ -35,12 +53,19 @@ export interface CandidateContest extends Contest {
   readonly candidates: Candidate[]
   readonly allowWriteIns: boolean
 }
+export interface RankContest extends Contest {
+  readonly type: 'rank'
+  readonly seats: number
+  readonly candidates: RankCandidate[]
+  readonly ranks: Ranks[]
+  readonly allowWriteIns: boolean
+}
 export interface YesNoContest extends Contest {
   readonly type: 'yesno'
   readonly description: string
   readonly shortTitle: string
 }
-export type Contests = (CandidateContest | YesNoContest)[]
+export type Contests = (CandidateContest | RankContest | YesNoContest)[]
 
 // Election
 export interface BMDConfig {
@@ -109,14 +134,20 @@ export interface ActivationData {
 
 // Votes
 export type CandidateVote = Candidate[]
+export type RankCandidateVote = RankCandidate[]
+export type RanksVote = Ranks[]
 export type YesNoVote = 'yes' | 'no'
 export type OptionalYesNoVote = YesNoVote | undefined
-export type Vote = CandidateVote | YesNoVote
+export type Vote = CandidateVote | RankCandidateVote | YesNoVote
 export type OptionalVote = Vote | undefined
+export type Rank = RanksVote
+export type OptionalRank = Rank
 export type VotesDict = Dictionary<Vote>
+export type RanksDict = Dictionary<Rank>
 
 // Ballot
 export type UpdateVoteFunction = (contestId: string, vote: OptionalVote) => void
+export type UpdateRankFunction = (contestId: string, rank: OptionalRank) => void
 export interface BallotContextInterface {
   contests: Contests
   readonly election: OptionalElection // Optional only because ballot context needs a default value. This is manually set to Election in Ballot component.
@@ -124,7 +155,9 @@ export interface BallotContextInterface {
   resetBallot: (path?: string) => void
   activateBallot: (activationData: ActivationData) => void
   updateVote: UpdateVoteFunction
+  updateRank: UpdateRankFunction
   votes: VotesDict
+  ranks: RanksDict
   precinctId: string
   ballotStyleId: string
   setUserSettings: (partial: PartialUserSettings) => void

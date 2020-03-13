@@ -7,7 +7,8 @@ export default function encryptAndGetTracker(
   // eslint-disable-next-line
   trackerType: BallotTrackerType,
   // eslint-disable-next-line
-  votes: VotesDict
+  votes: VotesDict,
+  //ranks: RanksDict
 ): Promise<string> {
   return new Promise(resolve => {
     window.setTimeout(() => {

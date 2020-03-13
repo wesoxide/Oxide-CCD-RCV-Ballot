@@ -29,8 +29,10 @@ export function render(
     resetBallot = jest.fn(),
     setUserSettings = jest.fn(),
     updateVote = jest.fn(),
+    updateRank = jest.fn(),
     userSettings = { textSize: GLOBALS.TEXT_SIZE as TextSizeSetting },
     votes = {},
+    ranks = {},
   } = {}
 ) {
   return {
@@ -46,8 +48,10 @@ export function render(
           resetBallot,
           setUserSettings,
           updateVote,
+          updateRank,
           userSettings,
           votes,
+          ranks,
         }}
       >
         <Router history={history}>{component}</Router>
