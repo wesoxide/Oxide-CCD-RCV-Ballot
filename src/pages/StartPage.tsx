@@ -48,9 +48,9 @@ const StartPage = () => {
               primary
               to="/instructions/"
               id="next"
-              aria-label="Select Next to Get Started."
+              aria-label="Select Next to start voting."
             >
-              Get Started
+              Start voting
             </LinkButton>
           </p>
         </Prose>

@@ -217,8 +217,8 @@ const RankContestResult = ({
                 candidate.isWriteIn ? `, write-in` : ''
               }${array.length - 1 === index ? '.' : ','}`}
               wordBreak
-              voteIcon
             >
+              <span>{candidate.rank}</span>&nbsp;&nbsp;
               <strong>{candidate.name}</strong> {party && `/ ${party.name}`}
               {candidate.isWriteIn && `(write-in)`}
             </Text>
@@ -227,7 +227,7 @@ const RankContestResult = ({
       )}
       {!!remainingChoices && (
         <Text bold warning warningIcon wordBreak>
-          You may select {remainingChoices} more{' '}
+          You may rank {remainingChoices} more{' '}
           {pluralize('candidate', remainingChoices)}.
         </Text>
       )}

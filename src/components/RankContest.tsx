@@ -1,6 +1,7 @@
 import camelCase from 'lodash.camelcase'
 import React from 'react'
 import _ from 'lodash'
+import ordinal from 'ordinal'
 import Keyboard from 'react-simple-keyboard'
 import 'react-simple-keyboard/build/css/index.css'
 import styled from 'styled-components'
@@ -637,6 +638,10 @@ class RankContest extends React.Component<Props, State> {
         return a.rank.localeCompare(b.rank)
       })
     }
+    let isFullRanked = false
+    if (contest.seats === vote.length) {
+      isFullRanked = true
+    }
     const hasReachedMaxSelections = contest.seats === vote.length
     const {
       attemptedOvervoteCandidate,
@@ -663,8 +668,19 @@ class RankContest extends React.Component<Props, State> {
                   vote.length
                 }. Use the down arrow to hear your options. Use the right arrow to move to the next contest.`}
               >
-                <strong>Vote for {contest.seats}.</strong> You have selected{' '}
-                {vote.length}.
+                There are {contest.seats} candidates. Rank the candidates in the
+                order of your choice. You may rank as many or as few as you
+                wish. <br />
+                <strong>
+                  You have ranked {vote.length}. You can rank{' '}
+                  {contest.seats - vote.length} more.
+                </strong>
+                <br />
+                {isFullRanked ? (
+                  <br />
+                ) : (
+                  <strong>Select your {ordinal(vote.length + 1)}.</strong>
+                )}
               </p>
             </Prose>
           </ContentHeader>

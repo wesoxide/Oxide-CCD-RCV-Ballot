@@ -72,6 +72,7 @@ export interface BMDConfig {
   readonly requireActivation?: boolean
   readonly showHelpPage?: boolean
   readonly showSettingsPage?: boolean
+  readonly showReviewPage?: boolean
 }
 export interface ElectionDefaults {
   readonly bmdConfig: BMDConfig
