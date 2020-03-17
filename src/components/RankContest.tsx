@@ -1,5 +1,6 @@
 import camelCase from 'lodash.camelcase'
 import React from 'react'
+import _ from 'lodash'
 import Keyboard from 'react-simple-keyboard'
 import 'react-simple-keyboard/build/css/index.css'
 import styled from 'styled-components'
@@ -160,6 +161,7 @@ const Choice = styled('label')<{ isSelected: boolean }>`
     0 0.0625rem 0.3125rem 0 rgba(0, 0, 0, 0.2);
   background: ${({ isSelected }) => (isSelected ? '#028099' : '#FFFFFF')};
   cursor: pointer;
+  width: 540px;
   color: ${({ isSelected }) => (isSelected ? '#FFFFFF' : undefined)};
   transition: background 0.25s, color 0.25s;
   grid-column: span 3;
@@ -246,7 +248,7 @@ const ChoiceInput = styled.input.attrs({
 
 const ButtonControlContainer = styled.div`
   display: grid;
-  grid-gap: 22px;
+  grid-gap: 24px;
   grid-template-columns: repeat(3, 1fr);
   align-items: center;
   grid-column: span 1;
@@ -318,6 +320,7 @@ interface State {
   writeInCandidateName: string
   nextRank: number
   isSortedByRank: boolean
+  isUpRank: boolean
 }
 
 const initialState = {
@@ -330,6 +333,7 @@ const initialState = {
   writeInCandidateName: '',
   nextRank: 1,
   isSortedByRank: true,
+  isUpRank: false,
 }
 
 class RankContest extends React.Component<Props, State> {
@@ -353,8 +357,15 @@ class RankContest extends React.Component<Props, State> {
     /* istanbul ignore else */
     if (this.props.vote.length !== prevProps.vote.length) {
       this.updateContestChoicesScrollStates()
+      //this.setState({ isUpRank: false })
+      if (!this.state.isUpRank) {
+        this.updateRanks()
+      }
     }
-    this.updateRanks()
+    if (!this.state.isUpRank) {
+      this.updateRanks()
+    }
+    // this.updateRanks()
   }
 
   public componentWillUnmount = () => {
@@ -420,9 +431,8 @@ class RankContest extends React.Component<Props, State> {
     } else {
       this.addCandidateToVote(id)
     }
-    this.setState({
-      isSortedByRank: false,
-    })
+    this.setState({ isSortedByRank: false })
+    this.setState({ isUpRank: false })
   }
 
   public handleCandidateFromVote = (event: any) => {
@@ -433,43 +443,68 @@ class RankContest extends React.Component<Props, State> {
       this.removeCandidateFromVote(id)
       candidate.rank = ''
     }
+    this.setState({ isUpRank: false })
+  }
+
+  public updateCandidateToVote = (id: string) => {
+    const { contest, vote } = this.props
+    const { candidates } = contest
+    const candidate = this.findCandidateById(candidates, id)!
+    this.props.updateVote(contest.id, [...vote, candidate])
+  }
+
+  public UpdateRemoveCandidateFromVote = (id: string) => {
+    const { contest, vote } = this.props
+    const newVote = vote.filter(c => c.id !== id)
+    this.props.updateVote(contest.id, newVote)
   }
 
   public upRank = (id: string) => {
-    const { vote, contest } = this.props
-    const { candidates } = contest
-    const candidate = this.findCandidateById(candidates, id)!
+    const { vote } = this.props
+    const candidate = this.findCandidateById(vote, id)!
+    const candidateIndex = _.findIndex(vote, function(o) {
+      return o.id === id
+    })
     const originalRank = candidate.rank
-    const candidateIndex = Number(originalRank) - 1
-    const switchCandidateIndex = candidateIndex - 1
-    const switchCandidate = vote[switchCandidateIndex]
-    const switchCandidateId = switchCandidate.id
-
-    //const tempRemoveCandidate = vote.filter(c => c.id !== id)
-    this.removeCandidateFromVote(id)
-    this.addCandidateToVote(id)
-    //candidate.rank = candidateIndex.toString()
-
-    //const tempRemoveSwitchCandidate = vote.filter(c => c.id !== switchCandidateId)
-    this.removeCandidateFromVote(switchCandidateId)
-    this.addCandidateToVote(switchCandidateId)
-    //switchCandidate.rank = originalRank
-
-    // console.log(candidate)
-    // console.log(switchCandidate)
-    // console.log(vote)
+    const switchIndex = candidateIndex - 1
+    const switchCandidate = vote[switchIndex]
+    if (candidateIndex !== 0) {
+      candidate.rank = candidateIndex.toString()
+      switchCandidate.rank = originalRank
+    }
   }
 
   public handleUpRank = (event: any) => {
-    //const { vote } = this.props
+    const { vote } = this.props
     const id = event.currentTarget.id
-    //const candidate = this.findCandidateById(vote, id)
-    // if (candidate) {
-
-    // }
     this.upRank(id)
-    this.updateRanks()
-    // console.log(vote)
+    this.setState({ isUpRank: true })
+    vote.sort((a, b) => (a.rank > b.rank ? 1 : -1))
+    //console.log(vote)
+  }
+
+  public downRank = (id: string) => {
+    const { vote } = this.props
+    const candidate = this.findCandidateById(vote, id)!
+    const candidateIndex = _.findIndex(vote, function(o) {
+      return o.id === id
+    })
+    const originalRank = candidate.rank
+    const switchIndex = candidateIndex + 1
+    const switchCandidate = vote[switchIndex]
+
+    if (candidateIndex + 1 !== vote.length) {
+      candidate.rank = switchCandidate.rank
+      switchCandidate.rank = originalRank
+    }
+  }
+
+  public handleDownRank = (event: any) => {
+    const { vote } = this.props
+    const id = event.currentTarget.id
+    this.downRank(id)
+    this.setState({ isUpRank: true })
+    vote.sort((a, b) => (a.rank > b.rank ? 1 : -1))
   }
 
   public toggleReorderByRank = () => {
@@ -618,7 +653,7 @@ class RankContest extends React.Component<Props, State> {
       <React.Fragment>
         <Main noOverflow noPadding>
           <ContentHeader id="contest-header">
-            <Prose id="audiofocus">
+            <Prose aria-hidden="false" id="audiofocus">
               <h1 aria-label={`${contest.title}.`}>
                 <ContestSection>{contest.section}</ContestSection>
                 {contest.title}
@@ -650,6 +685,19 @@ class RankContest extends React.Component<Props, State> {
                         vote,
                         candidate.id
                       )
+
+                      let isUpRankReady = true
+                      if (isChecked && candidate.rank !== '1') {
+                        isUpRankReady = false
+                      }
+
+                      let isDownRankReady = true
+                      if (
+                        isChecked &&
+                        candidate.rank !== vote.length.toString()
+                      ) {
+                        isDownRankReady = false
+                      }
 
                       const isDisabled = hasReachedMaxSelections && !isChecked
                       const handleDisabledClick = () => {
@@ -692,29 +740,39 @@ class RankContest extends React.Component<Props, State> {
                               </Text>
                             </Prose>
                           </Choice>
-                          <ButtonControlContainer>
-                            <LinkButton
-                              id={candidate.id}
-                              disabled={!isChecked}
-                              onClick={this.handleCandidateFromVote}
-                            >
-                              <RemoveRank />
-                            </LinkButton>
-                            <LinkButton
-                              id={candidate.id}
-                              disabled={!writeInCandateModalIsOpen}
-                              onClick={this.handleUpRank}
-                            >
-                              <UpRank />
-                            </LinkButton>
-                            <LinkButton
-                              id={candidate.id}
-                              disabled={!writeInCandateModalIsOpen}
-                              onClick={this.toggleReorderByRank}
-                            >
-                              <DownRank />
-                            </LinkButton>
-                          </ButtonControlContainer>
+                          {isChecked ? (
+                            <ButtonControlContainer>
+                              <LinkButton
+                                value="arrowControls"
+                                id={candidate.id}
+                                disabled={!isChecked}
+                                onClick={this.handleCandidateFromVote}
+                                handleArrows
+                              >
+                                <RemoveRank />
+                              </LinkButton>
+                              <LinkButton
+                                value="arrowControls"
+                                id={candidate.id}
+                                disabled={isUpRankReady}
+                                onClick={this.handleUpRank}
+                                handleArrows={isUpRankReady}
+                              >
+                                <UpRank />
+                              </LinkButton>
+                              <LinkButton
+                                value="arrowControls"
+                                id={candidate.id}
+                                disabled={isDownRankReady}
+                                onClick={this.handleDownRank}
+                                handleArrows={isDownRankReady}
+                              >
+                                <DownRank />
+                              </LinkButton>
+                            </ButtonControlContainer>
+                          ) : (
+                            <ButtonControlContainer />
+                          )}
                         </ChoiceContainer>
                       )
                     })}

@@ -13,6 +13,7 @@ interface Props {
   goBack?: boolean
   primary?: boolean
   to?: string
+  handleArrows?: boolean
 }
 
 const LinkButton = (props: Props) => {
@@ -24,6 +25,7 @@ const LinkButton = (props: Props) => {
     onClick,
     staticContext, // eslint-disable-line @typescript-eslint/no-unused-vars
     to,
+    //handleArrows,
     // ⬆ filtering out props that `button` doesn’t know what to do with.
     ...rest
   } = props

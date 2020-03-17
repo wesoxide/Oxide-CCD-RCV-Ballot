@@ -2,7 +2,7 @@ import React from 'react'
 import Dropzone from 'react-dropzone'
 import styled from 'styled-components'
 
-import electionSample from '../data/electionSample.json'
+import electionSample from '../data/electionSample(RCV).json'
 import isJSON from '../utils/isJSON'
 
 import Button from './Button'
@@ -140,7 +140,7 @@ class UploadConfig extends React.Component<Props, State> {
         <Footer>
           <Prose textCenter>
             <Text center small>
-              <a href="/data/election.json">
+              <a href="/data/electionSample(RCV).json">
                 Download sample <code>election.json</code> file
               </a>{' '}
               to upload, or{' '}
