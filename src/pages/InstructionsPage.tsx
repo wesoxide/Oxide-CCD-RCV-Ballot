@@ -12,6 +12,10 @@ const InstructionsPage = () => {
   const { contests, election } = useContext(BallotContext)
   const { bmdConfig } = election!
   const { showHelpPage, showSettingsPage } = bmdConfig!
+  let contestText = 'contests'
+  if (contests.length === 1) {
+    contestText = 'contest'
+  }
   return (
     <React.Fragment>
       <Main>
@@ -19,7 +23,9 @@ const InstructionsPage = () => {
           <Breadcrumbs step={1} />
           <Prose textCenter>
             <h1 aria-label="Mark your ballot.">Mark your ballot</h1>
-            <Text narrow>{`This ballot has ${contests.length} contests.`}</Text>
+            <Text narrow>{`This ballot has ${
+              contests.length
+            } ${contestText}.`}</Text>
             <p>
               <LinkButton
                 primary
@@ -28,7 +34,7 @@ const InstructionsPage = () => {
                 id="next"
                 aria-label="Select Next to Start Voting."
               >
-                Start Voting
+                Start voting
               </LinkButton>
             </p>
           </Prose>

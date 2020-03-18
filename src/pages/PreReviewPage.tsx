@@ -18,7 +18,7 @@ const SummaryPage = () => {
         <MainChild center>
           <Breadcrumbs step={2} />
           <Prose textCenter id="audiofocus">
-            <h1 aria-label="Review Your Selections.">Review Your Selections</h1>
+            <h1 aria-label="Review your selections.">Review your selections</h1>
             <Text narrow>Confirm and change any votes as necessary.</Text>
             <div aria-label="Use the down arrow, then" />
             <p>
@@ -28,7 +28,7 @@ const SummaryPage = () => {
                 to="/review"
                 aria-label="Use the select button to begin your review."
               >
-                Review Selections
+                Review selections
               </LinkButton>
             </p>
           </Prose>

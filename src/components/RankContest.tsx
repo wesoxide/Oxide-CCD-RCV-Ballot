@@ -1,7 +1,7 @@
 import camelCase from 'lodash.camelcase'
 import React from 'react'
 import _ from 'lodash'
-import ordinal from 'ordinal'
+// import ordinal from 'ordinal'
 import Keyboard from 'react-simple-keyboard'
 import 'react-simple-keyboard/build/css/index.css'
 import styled from 'styled-components'
@@ -638,10 +638,10 @@ class RankContest extends React.Component<Props, State> {
         return a.rank.localeCompare(b.rank)
       })
     }
-    let isFullRanked = false
-    if (contest.seats === vote.length) {
-      isFullRanked = true
-    }
+    // let isFullRanked = false
+    // if (contest.seats === vote.length) {
+    //   isFullRanked = true
+    // }
     const hasReachedMaxSelections = contest.seats === vote.length
     const {
       attemptedOvervoteCandidate,
@@ -676,11 +676,11 @@ class RankContest extends React.Component<Props, State> {
                   {contest.seats - vote.length} more.
                 </strong>
                 <br />
-                {isFullRanked ? (
+                {/*isFullRanked ? (
                   <br />
                 ) : (
                   <strong>Select your {ordinal(vote.length + 1)}.</strong>
-                )}
+                )*/}
               </p>
             </Prose>
           </ContentHeader>

@@ -238,7 +238,7 @@ class SummaryPage extends React.Component<RouteComponentProps, State> {
                 onClick={this.showConfirm}
                 aria-label="Use the select button to print your ballot."
               >
-                Print Ballot
+                Print ballot
               </Button>
             </Prose>
           </MainChild>
