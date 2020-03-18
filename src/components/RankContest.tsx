@@ -658,7 +658,7 @@ class RankContest extends React.Component<Props, State> {
       <React.Fragment>
         <Main noOverflow noPadding>
           <ContentHeader id="contest-header">
-            <Prose aria-hidden="false" id="audiofocus">
+            <Prose aria-hidden="false" id="audiofocus" className="focusable">
               <h1 aria-label={`${contest.title}.`}>
                 <ContestSection>{contest.section}</ContestSection>
                 {contest.title}

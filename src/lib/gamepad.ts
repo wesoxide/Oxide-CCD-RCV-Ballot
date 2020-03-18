@@ -17,9 +17,13 @@ function getFocusableElements(): HTMLElement[] {
 }
 
 function findNextInput(currentIndex: number) {
-  const focusable = Object.values(getFocusableElements())
+  //const focusable = Object.values(getFocusableElements())
+  const focusable = getFocusableElements()
   let nextIndex = mod(currentIndex + 1, focusable.length)
-  const currentId = Object.values(focusable[currentIndex])[1].id
+  let currentId = Object.values(focusable[currentIndex])[1].id
+  // if (focusable.length === 1) {
+  //   currentId = Object.values(focusable[0])[1].id
+  // }
   let nextId = Object.values(focusable[nextIndex])[1].id
   while (currentId === nextId) {
     nextIndex = mod(nextIndex + 1, focusable.length)
@@ -29,7 +33,8 @@ function findNextInput(currentIndex: number) {
 }
 
 function findPrevInput(currentIndex: number) {
-  const focusable = Object.values(getFocusableElements())
+  //const focusable = Object.values(getFocusableElements())
+  const focusable = getFocusableElements()
   let prevIndex = mod(currentIndex - 1, focusable.length)
   let prevVal = Object.values(focusable[prevIndex])[1].value
   while (prevVal === 'arrowControls') {
@@ -65,13 +70,17 @@ function handleArrowDown() {
   const nextIndex = mod(currentIndex + 1, focusable.length)
   let currentId
   if (currentIndex > -1) {
-    currentId = Object.values(focusable[currentIndex])[1].id
+    currentId = Object.values(
+      focusable[mod(currentIndex + 1, focusable.length)]
+    )[1].id
   } else {
-    currentId = Object.values(focusable[focusable.length - 1])[1].id
+    currentId = Object.values(
+      focusable[mod(currentIndex - 1, focusable.length)]
+    )[1].id
   }
   const nextId = Object.values(focusable[nextIndex])[1].id
-  if (currentId === nextId) {
-    if (currentId !== undefined) {
+  if (focusable.length > 1 && currentId === nextId) {
+    if (currentId) {
       focusable[mod(findNextInput(currentIndex), focusable.length)].focus()
     } else if (focusable.length) {
       focusable[mod(currentIndex + 1, focusable.length)].focus()
