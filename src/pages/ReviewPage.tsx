@@ -219,7 +219,7 @@ const RankContestResult = ({
               wordBreak
             >
               <span>{candidate.rank}</span>&nbsp;&nbsp;
-              <strong>{candidate.name}</strong> {party && `/ ${party.name}`}
+              <strong>{candidate.name}</strong> {party && `(${party.name})`}
               {candidate.isWriteIn && `(write-in)`}
             </Text>
           )

@@ -102,12 +102,8 @@ const ContestPage = (props: RouteComponentProps<ContestParams>) => {
       <ButtonBar>
         {isReviewMode ? (
           <React.Fragment>
-            <LinkButton
-              primary={isVoteComplete}
-              to={`/review#contest-${contest.id}`}
-              id="next"
-            >
-              Review Ballot
+            <LinkButton primary to={`/review#contest-${contest.id}`} id="next">
+              Review ballot
             </LinkButton>
           </React.Fragment>
         ) : (

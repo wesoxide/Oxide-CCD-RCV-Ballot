@@ -148,7 +148,7 @@ const ChoicesGrid = styled.div`
 
 const ChoiceContainer = styled.div`
   display: grid;
-  grid-gap: 24px;
+  grid-gap: 1rem;
   grid-template-columns: repeat(4, 1fr);
 `
 
@@ -162,7 +162,7 @@ const Choice = styled('label')<{ isSelected: boolean }>`
     0 0.0625rem 0.3125rem 0 rgba(0, 0, 0, 0.2);
   background: ${({ isSelected }) => (isSelected ? '#028099' : '#FFFFFF')};
   cursor: pointer;
-  width: 540px;
+  width: 22.5rem;
   color: ${({ isSelected }) => (isSelected ? '#FFFFFF' : undefined)};
   transition: background 0.25s, color 0.25s;
   grid-column: span 3;
@@ -249,7 +249,7 @@ const ChoiceInput = styled.input.attrs({
 
 const ButtonControlContainer = styled.div`
   display: grid;
-  grid-gap: 24px;
+  grid-gap: 1rem;
   grid-template-columns: repeat(3, 1fr);
   align-items: center;
   grid-column: span 1;
@@ -257,13 +257,13 @@ const ButtonControlContainer = styled.div`
   button {
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
     background-color: #afbdc4;
-    width: 60px;
-    height: 60px;
+    width: 2.5rem;
+    height: 2.5rem;
     padding: 0.75rem;
     transition: all 0.25s ease;
 
     svg {
-      width: 24px;
+      width: 1rem;
       fill: #ffffff;
     }
 
@@ -440,9 +440,11 @@ class RankContest extends React.Component<Props, State> {
     const { vote } = this.props
     const id = event.currentTarget.id
     const candidate = this.findCandidateById(vote, id)
-    if (candidate) {
+    const currentInput = document.querySelector('input#' + id) as HTMLElement
+    if (candidate && currentInput) {
       this.removeCandidateFromVote(id)
       candidate.rank = ''
+      currentInput.focus()
     }
     this.setState({ isUpRank: false })
   }
@@ -479,9 +481,14 @@ class RankContest extends React.Component<Props, State> {
     const { vote } = this.props
     const id = event.currentTarget.id
     this.upRank(id)
+    this.setState({ isSortedByRank: false })
     this.setState({ isUpRank: true })
     vote.sort((a, b) => (a.rank > b.rank ? 1 : -1))
-    //console.log(vote)
+    let candidateRank = this.findCandidateById(vote, id)
+    const currentInput = document.querySelector('input#' + id) as HTMLElement
+    if (candidateRank && candidateRank.rank === '1' && currentInput) {
+      currentInput.focus()
+    }
   }
 
   public downRank = (id: string) => {
@@ -504,8 +511,15 @@ class RankContest extends React.Component<Props, State> {
     const { vote } = this.props
     const id = event.currentTarget.id
     this.downRank(id)
+    this.setState({ isSortedByRank: false })
     this.setState({ isUpRank: true })
     vote.sort((a, b) => (a.rank > b.rank ? 1 : -1))
+    let candidateRank = this.findCandidateById(vote, id)
+    const voteLength = vote.length.toString()
+    const currentInput = document.querySelector('input#' + id) as HTMLElement
+    if (candidateRank && candidateRank.rank === voteLength && currentInput) {
+      currentInput.focus()
+    }
   }
 
   public toggleReorderByRank = () => {
@@ -658,7 +672,12 @@ class RankContest extends React.Component<Props, State> {
       <React.Fragment>
         <Main noOverflow noPadding>
           <ContentHeader id="contest-header">
-            <Prose aria-hidden="false" id="audiofocus" className="focusable">
+            <Prose
+              aria-hidden="false"
+              id="audiofocus"
+              className="focusable"
+              tabIndex={-1}
+            >
               <h1 aria-label={`${contest.title}.`}>
                 <ContestSection>{contest.section}</ContestSection>
                 {contest.title}
@@ -726,14 +745,16 @@ class RankContest extends React.Component<Props, State> {
                         findPartyById(parties, candidate.partyId)
                       const rank = candidate.rank
                       return (
-                        <ChoiceContainer key={candidate.id}>
+                        <ChoiceContainer key={candidate.name}>
                           <Choice
+                            key={candidate.id}
                             htmlFor={candidate.id}
                             isSelected={isChecked}
                             onClick={handleDisabledClick}
                             aria-label={`${candidate.name}, ${
                               party ? party.name : ''
                             }. rank: ${rank}`}
+                            className="choice"
                           >
                             <ChoiceInput
                               id={candidate.id}
