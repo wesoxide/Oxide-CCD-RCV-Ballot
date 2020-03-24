@@ -47,10 +47,10 @@ const SettingsPage = () => {
   }
   const requestResetBallot = () => {
     resetBallot()
-    localStorage.clear()
   }
   const requestNewBallot = () => {
     Object.keys(votes).length === 0 ? resetBallot() : setResetBallotAlert(true)
+    localStorage.clear()
   }
   // const onFontSizeChange = (event: InputEvent) => {
   //   const target = event.target as HTMLInputElement
