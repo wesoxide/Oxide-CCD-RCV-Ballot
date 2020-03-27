@@ -19,7 +19,7 @@ const Label = styled.label`
 `
 
 const Footer = styled.footer`
-  padding: 1rem;
+  grid-area: chromebottom;
 `
 
 interface Props {
@@ -145,7 +145,7 @@ class UploadConfig extends React.Component<Props, State> {
               </a>{' '}
               to upload, or{' '}
               <Button onClick={this.loadSampleElection}>
-                Load Sample Election File
+                Load sample election file
               </Button>
             </Text>
           </Prose>

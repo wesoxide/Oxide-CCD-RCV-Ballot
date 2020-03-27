@@ -3,9 +3,10 @@ import { RouteComponentProps, withRouter } from 'react-router-dom'
 import styled from 'styled-components'
 
 const StyledScreen = styled.div`
-  display: flex;
-  flex-direction: column;
-  height: 100%;
+  display: grid;
+  grid-template-areas: 'chrometop' 'main' 'chromebottom';
+  grid-template-rows: 3.75rem calc(100vh - 7.5rem) 3.75rem;
+  height: 100vh;
   &:focus {
     outline: none;
   }

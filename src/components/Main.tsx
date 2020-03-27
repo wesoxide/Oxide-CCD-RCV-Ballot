@@ -12,6 +12,7 @@ const Main = styled('main')<Props>`
   overflow: ${({ noOverflow = false }) => (noOverflow ? undefined : 'auto')};
   padding: ${({ noPadding = false }) =>
     noPadding ? undefined : '1rem 0.5rem 2rem'};
+  grid-area: main;
   @media (min-width: 480px) {
     padding: ${({ noPadding = false }) =>
       noPadding ? undefined : '2rem 1rem'};
@@ -22,7 +23,7 @@ const Main = styled('main')<Props>`
   }
   ::-webkit-scrollbar {
     display: none;
-  }    
+  }
 `
 
 interface ChildProps {
@@ -45,6 +46,6 @@ export const MainChild = styled('div')<ChildProps>`
     margin: 0;
     max-width: 100%;
   }
-  `
+`
 
 export default Main

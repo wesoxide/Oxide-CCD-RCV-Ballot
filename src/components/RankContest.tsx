@@ -48,7 +48,13 @@ const ContentHeader = styled.div`
   padding: 1rem 0.75rem 0.5rem;
   @media (min-width: ${tabletMinWidth}px) {
     padding: 1rem 1.5rem 0.5rem;
-    padding-left: 5rem;
+    > div {
+      padding-left: 4.5rem;
+    }
+
+    button {
+      margin-top: 0.5rem;
+    }
   }
 `
 const ContestSection = styled.div`
@@ -91,40 +97,40 @@ const VariableContentContainer = styled.div<ScrollShadows>`
     );
   }
 `
-const ScrollControls = styled.div`
-  display: none;
-  flex-direction: column;
-  justify-content: space-between;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  max-width: 35rem;
-  padding: 0.5rem 0.75rem 0.5rem 0;
-  padding-left: calc(100% - 7rem);
-  pointer-events: none;
-  & > * {
-    pointer-events: auto;
-  }
-  html[data-useragent*='Windows'] & {
-    margin-left: -17px; /* Windows Chrome scrollbar width */
-  }
-  @media (min-width: ${tabletMinWidth}px) {
-    display: flex;
-  }
-  @media (min-width: 840px) {
-    left: 50%;
-    margin-left: -420px;
-    padding-left: calc(840px - 7rem);
-    html[data-useragent*='Windows'] & {
-      margin-left: calc(-420px + -17px); /* Windows Chrome scrollbar width */
-    }
-  }
-`
+// const ScrollControls = styled.div`
+//   display: none;
+//   flex-direction: column;
+//   justify-content: space-between;
+//   position: absolute;
+//   top: 0;
+//   bottom: 0;
+//   left: 0;
+//   width: 100%;
+//   max-width: 35rem;
+//   padding: 0.5rem 0.75rem 0.5rem 0;
+//   padding-left: calc(100% - 7rem);
+//   pointer-events: none;
+//   & > * {
+//     pointer-events: auto;
+//   }
+//   html[data-useragent*='Windows'] & {
+//     margin-left: -17px; /* Windows Chrome scrollbar width */
+//   }
+//   @media (min-width: ${tabletMinWidth}px) {
+//     display: flex;
+//   }
+//   @media (min-width: 840px) {
+//     left: 50%;
+//     margin-left: -420px;
+//     padding-left: calc(840px - 7rem);
+//     html[data-useragent*='Windows'] & {
+//       margin-left: calc(-420px + -17px); /* Windows Chrome scrollbar width */
+//     }
+//   }
+// `
 const ScrollContainer = styled.div`
   flex: 1;
-  overflow: auto;
+  overflow: hidden;
 `
 const ScrollableContentWrapper = styled.div<Scrollable>`
   margin: 0 auto;
@@ -132,10 +138,7 @@ const ScrollableContentWrapper = styled.div<Scrollable>`
   max-width: 35rem;
   padding: 0.5rem 0.5rem 1rem;
   @media (min-width: ${tabletMinWidth}px) {
-    padding-right: ${({ isScrollable }) =>
-      isScrollable
-        ? /* istanbul ignore next: Tested by Cypress */ '8rem'
-        : '1rem'};
+    padding-right: 1rem;
     padding-left: 1rem;
   }
 `
@@ -224,14 +227,15 @@ const ButtonContainer = styled.div`
   display: flex;
   justify-content: center;
   position: relative;
-  margin: 120px auto 0;
-  max-width: 600px;
+  margin: 1rem auto 0;
+  max-width: 25rem;
 
   button {
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
     background-color: #afbdc4;
     width: 100%;
-    transition: all 0.25s ease;
+    transition: box-shadow 0.25s ease, background-color 0.25s ease,
+      color 0.25s ease;
     &:disabled {
       box-shadow: 0 3px 6px rgba(0, 0, 0, 0.08), 0 3px 6px rgba(0, 0, 0, 0.12);
       background-color: #cfd9de;
@@ -260,7 +264,7 @@ const ButtonControlContainer = styled.div`
     width: 2.5rem;
     height: 2.5rem;
     padding: 0.75rem;
-    transition: all 0.25s ease;
+    transition: box-shadow 0.25s ease, background-color 0.25s ease;
 
     svg {
       width: 1rem;
@@ -277,6 +281,16 @@ const ButtonControlContainer = styled.div`
         }
       }
     }
+  }
+`
+
+const ContentFooter = styled.div`
+  margin: 0 auto;
+  width: 100%;
+  max-width: 35rem;
+  padding: 0.5rem 0.5rem;
+  @media (min-width: ${tabletMinWidth}px) {
+    padding: 0.5rem 1rem;
   }
 `
 
@@ -446,6 +460,7 @@ class RankContest extends React.Component<Props, State> {
       candidate.rank = ''
       currentInput.focus()
     }
+    this.setState({ isSortedByRank: false })
     this.setState({ isUpRank: false })
   }
 
@@ -522,11 +537,35 @@ class RankContest extends React.Component<Props, State> {
     }
   }
 
-  public toggleReorderByRank = () => {
+  public toggleReorderByRank = (event: any) => {
     //const { vote } = this.props
     this.setState({
       isSortedByRank: true,
     })
+    // const firstId = vote[0].id
+    // const firstInput = document.querySelector('input#' + firstId) as HTMLElement
+    // firstInput.focus()
+    const focusElement = document.querySelector('.findfocus') as HTMLElement
+    focusElement.focus()
+    const direction = (event.target as HTMLElement).dataset
+      .direction as ScrollDirections
+    const scrollContainer = this.scrollContainer.current!
+    const currentScrollTop = scrollContainer.scrollTop
+    const offsetHeight = scrollContainer.offsetHeight
+    const scrollHeight = scrollContainer.scrollHeight
+    const idealScrollDistance = Math.round(offsetHeight * 0.75)
+    const maxScrollableDownDistance =
+      scrollHeight - offsetHeight - currentScrollTop
+    const maxScrollTop =
+      direction === 'down'
+        ? currentScrollTop + maxScrollableDownDistance
+        : currentScrollTop
+    const idealScrollTop =
+      direction === 'down'
+        ? currentScrollTop + idealScrollDistance
+        : currentScrollTop - idealScrollDistance
+    const top = idealScrollTop > maxScrollTop ? maxScrollTop : idealScrollTop
+    scrollContainer.scrollTo({ behavior: 'smooth', left: 0, top })
   }
 
   public handleChangeVoteAlert = (
@@ -672,17 +711,18 @@ class RankContest extends React.Component<Props, State> {
       <React.Fragment>
         <Main noOverflow noPadding>
           <ContentHeader id="contest-header">
-            <Prose
-              aria-hidden="false"
-              id="audiofocus"
-              className="focusable"
-              tabIndex={-1}
-            >
-              <h1 aria-label={`${contest.title}.`}>
+            <Prose aria-hidden="false" id="audiofocus">
+              <h1
+                aria-label={`${contest.title}.`}
+                className="focusable findfocus"
+                tabIndex={-1}
+              >
                 <ContestSection>{contest.section}</ContestSection>
                 {contest.title}
               </h1>
               <p
+                className="focusable"
+                tabIndex={-1}
                 aria-label={`Vote for ${contest.seats}. You have selected ${
                   vote.length
                 }. Use the down arrow to hear your options. Use the right arrow to move to the next contest.`}
@@ -702,6 +742,15 @@ class RankContest extends React.Component<Props, State> {
                 )*/}
               </p>
             </Prose>
+            <Button
+              aria-hidden
+              data-direction="up"
+              disabled={isScrollAtTop}
+              fullWidth
+              onClick={this.scrollContestChoices}
+            >
+              ↑ See More
+            </Button>
           </ContentHeader>
           <VariableContentContainer
             showTopShadow={!isScrollAtTop}
@@ -853,37 +902,29 @@ class RankContest extends React.Component<Props, State> {
                     </Choice>
                   )}
                 </ChoicesGrid>
-                <ButtonContainer>
-                  <LinkButton
-                    disabled={isSortedByRank}
-                    onClick={this.toggleReorderByRank}
-                  >
-                    <strong>Put in order</strong>
-                  </LinkButton>
-                </ButtonContainer>
               </ScrollableContentWrapper>
             </ScrollContainer>
-            {isScrollable /* istanbul ignore next: Tested by Cypress */ && (
-              <ScrollControls aria-hidden="true">
-                <Button
-                  aria-hidden
-                  data-direction="up"
-                  disabled={isScrollAtTop}
-                  onClick={this.scrollContestChoices}
-                >
-                  ↑ See More
-                </Button>
-                <Button
-                  aria-hidden
-                  data-direction="down"
-                  disabled={isScrollAtBottom}
-                  onClick={this.scrollContestChoices}
-                >
-                  ↓ See More
-                </Button>
-              </ScrollControls>
-            )}
           </VariableContentContainer>
+          <ContentFooter>
+            <Button
+              aria-hidden
+              data-direction="down"
+              disabled={isScrollAtBottom}
+              fullWidth
+              onClick={this.scrollContestChoices}
+            >
+              ↓ See More
+            </Button>
+            <ButtonContainer>
+              <LinkButton
+                disabled={isSortedByRank}
+                data-direction="up"
+                onClick={this.toggleReorderByRank}
+              >
+                <strong>Put in order</strong>
+              </LinkButton>
+            </ButtonContainer>
+          </ContentFooter>
         </Main>
         <Modal
           isOpen={!!attemptedOvervoteCandidate}

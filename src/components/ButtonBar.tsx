@@ -17,6 +17,7 @@ const ButtonBar = styled('nav')<Props>`
   background: ${({ dark = true }) =>
     dark ? '#455a64' : 'rgba(0, 0, 0, 0.05)'};
   padding: 0.25rem;
+  grid-area: ${({ secondary }) => (secondary ? 'chrometop' : 'chromebottom')};
 
   & > *:first-child {
     order: 2;

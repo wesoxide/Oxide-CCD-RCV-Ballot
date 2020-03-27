@@ -17,13 +17,10 @@ function getFocusableElements(): HTMLElement[] {
 }
 
 function findNextInput(currentIndex: number) {
-  //const focusable = Object.values(getFocusableElements())
   const focusable = getFocusableElements()
   let nextIndex = mod(currentIndex + 1, focusable.length)
   let currentId = Object.values(focusable[currentIndex])[1].id
-  // if (focusable.length === 1) {
-  //   currentId = Object.values(focusable[0])[1].id
-  // }
+
   let nextId = Object.values(focusable[nextIndex])[1].id
   while (currentId === nextId) {
     nextIndex = mod(nextIndex + 1, focusable.length)
@@ -33,7 +30,6 @@ function findNextInput(currentIndex: number) {
 }
 
 function findPrevInput(currentIndex: number) {
-  //const focusable = Object.values(getFocusableElements())
   const focusable = getFocusableElements()
   let prevIndex = mod(currentIndex - 1, focusable.length)
   let prevVal = Object.values(focusable[prevIndex])[1].value
@@ -42,6 +38,91 @@ function findPrevInput(currentIndex: number) {
     prevVal = Object.values(focusable[prevIndex])[1].value
   }
   return prevIndex
+}
+
+function findRightInput(currentIndex: number) {
+  const focusable = getFocusableElements()
+  const currentId = Object.values(
+    focusable[mod(currentIndex, focusable.length)]
+  )[1].id
+  let currentVal = Object.values(
+    focusable[mod(currentIndex, focusable.length)]
+  )[1].value
+  let nextVal = Object.values(
+    focusable[mod(currentIndex + 1, focusable.length)]
+  )[1].value
+  const inputIndex = focusable.findIndex(obj => obj.id === currentId)
+  let returnIndex = inputIndex
+  if (
+    currentId !== undefined &&
+    nextVal !== undefined &&
+    currentVal === 'arrowControls' &&
+    nextVal === 'arrowControls'
+  ) {
+    returnIndex = currentIndex + 1
+  }
+  return returnIndex
+}
+
+function noRightInput(currentIndex: number) {
+  const focusable = getFocusableElements()
+  const nextIndex = findRightInput(currentIndex)
+  if (currentIndex !== -1) {
+    const currentVal = Object.values(focusable[currentIndex])[1].value
+    if (
+      nextIndex === undefined ||
+      currentVal === undefined ||
+      currentVal !== 'arrowControls'
+    ) {
+      return true
+    } else {
+      return false
+    }
+  } else {
+    return true
+  }
+}
+
+// function findLeftInput(currentIndex: number) {
+//   const focusable = getFocusableElements()
+//   const currentId = Object.values(focusable[mod(currentIndex, focusable.length)])[1].id
+//   let currentVal = Object.values(focusable[mod(currentIndex, focusable.length)])[1].value
+//   let prevVal = Object.values(focusable[mod(currentIndex - 1, focusable.length)])[1].value
+//   const inputIndex = focusable.findIndex(obj => obj.id === currentId)
+//   let returnIndex = inputIndex
+//   if (currentId!== undefined && prevVal !== undefined && currentVal === 'arrowControls' && prevVal === 'arrowControls') {
+//     returnIndex = currentIndex - 1
+//   }
+//   return returnIndex
+// }
+
+// function noLeftInput(currentIndex: number) {
+//   const focusable = getFocusableElements()
+//   const prevIndex = findLeftInput(currentIndex)
+//   const currentVal = Object.values(focusable[currentIndex])[1].value
+//   if (prevIndex === undefined || currentVal === undefined || currentVal !== 'arrowControls') {
+//     return true
+//   } else {
+//     return false
+//   }
+// }
+
+function isChecked(currentIndex: number) {
+  const focusable = getFocusableElements()
+  if (currentIndex !== -1) {
+    return Object.values(focusable[currentIndex])[1].checked
+  } else {
+    return false
+  }
+}
+
+function findLeftInput(currentIndex: number) {
+  const focusable = getFocusableElements()
+  const currentId = Object.values(focusable[currentIndex])[1].id
+  const focusableReverse = focusable.reverse()
+  const reverseIndex = focusableReverse.findIndex(obj => obj.id === currentId)
+  const finalIndex = focusable.length - 1 - reverseIndex
+  return finalIndex
 }
 
 const getActiveElement = () => document.activeElement! as HTMLInputElement
@@ -66,7 +147,6 @@ function handleArrowUp() {
 function handleArrowDown() {
   const focusable = getFocusableElements()
   const currentIndex = focusable.indexOf(getActiveElement())
-  // console.log(focusable)
   /* istanbul ignore else */
   const nextIndex = mod(currentIndex + 1, focusable.length)
   let currentId
@@ -136,19 +216,19 @@ function handleArrowDown() {
 //   return Object.values(focusable[currentIndex])
 // }
 
-function getParentElement(el: HTMLElement) {
-  if (el.parentElement !== undefined) {
-    return el.parentElement
-  }
-}
+// function getParentElement(el: HTMLElement) {
+//   if (el.parentElement !== undefined) {
+//     return el.parentElement
+//   }
+// }
 
-function noParent(el: HTMLElement) {
-  if (el === undefined) {
-    return true
-  } else {
-    return false
-  }
-}
+// function noParent(el: HTMLElement) {
+//   if (el === undefined) {
+//     return true
+//   } else {
+//     return false
+//   }
+// }
 
 // const getActiveElement = () => document.activeElement! as HTMLInputElement
 
@@ -174,75 +254,116 @@ function noParent(el: HTMLElement) {
 //   }
 // }
 
+// function handleArrowLeft() {
+//   const focusable = getFocusableElements()
+//   const currentIndex = focusable.indexOf(getActiveElement())
+//   const currentElement = focusable[currentIndex]
+//   const prevButton = document.getElementById('previous') as HTMLButtonElement
+//   let noparent = noParent(currentElement)
+
+//   if (noparent && prevButton) {
+//     prevButton.click()
+//   } else {
+//     const parentElement = getParentElement(currentElement)
+//     const currentVal = Object.values(focusable[currentIndex])[1].value
+//     if (
+//       parentElement &&
+//       parentElement.classList.contains('choice') &&
+//       focusable.length
+//     ) {
+//       if (currentIndex > -1) {
+//         focusable[mod(currentIndex - 1, focusable.length)].focus()
+//       } else {
+//         focusable[focusable.length - 1].focus()
+//       }
+//     } else if (
+//       currentVal &&
+//       currentVal === 'arrowControls' &&
+//       focusable.length
+//     ) {
+//       if (currentIndex > -1) {
+//         focusable[mod(currentIndex - 1, focusable.length)].focus()
+//       } else {
+//         focusable[focusable.length - 1].focus()
+//       }
+//     } else if (prevButton) {
+//       prevButton.click()
+//     }
+//     noparent = true
+//   }
+// }
+
 function handleArrowLeft() {
   const focusable = getFocusableElements()
   const currentIndex = focusable.indexOf(getActiveElement())
-  const currentElement = focusable[currentIndex]
-  const prevButton = document.getElementById('previous') as HTMLButtonElement
-  let noparent = noParent(currentElement)
-
-  if (noparent && prevButton) {
-    prevButton.click()
-  } else {
-    const parentElement = getParentElement(currentElement)
-    const currentVal = Object.values(focusable[currentIndex])[1].value
-    if (
-      parentElement &&
-      parentElement.classList.contains('choice') &&
-      focusable.length
-    ) {
-      if (currentIndex > -1) {
-        focusable[mod(currentIndex - 1, focusable.length)].focus()
-      } else {
-        focusable[focusable.length - 1].focus()
-      }
-    } else if (
-      currentVal &&
-      currentVal === 'arrowControls' &&
-      focusable.length
-    ) {
-      if (currentIndex > -1) {
-        focusable[mod(currentIndex - 1, focusable.length)].focus()
-      } else {
-        focusable[focusable.length - 1].focus()
-      }
-    } else if (prevButton) {
-      prevButton.click()
+  const checked = isChecked(currentIndex)
+  /* istanbul ignore else */
+  if (checked) {
+    focusable[mod(findLeftInput(currentIndex), focusable.length)].focus()
+  } else if (focusable.length) {
+    if (currentIndex > -1) {
+      focusable[mod(currentIndex - 1, focusable.length)].focus()
+    } else {
+      focusable[focusable.length - 1].focus()
     }
-    noparent = true
   }
+  // if (focusable.length) {
+  //   if (currentIndex > -1) {
+  //     focusable[mod(currentIndex - 1, focusable.length)].focus()
+  //   } else {
+  //     focusable[focusable.length - 1].focus()
+  //   }
+  // }
 }
 
 function handleArrowRight() {
   const focusable = getFocusableElements()
   const currentIndex = focusable.indexOf(getActiveElement())
-  const currentElement = focusable[currentIndex]
-  const nextButton = document.getElementById('next') as HTMLButtonElement
-  let noparent = noParent(currentElement)
-
-  if (noparent && nextButton) {
-    nextButton.click()
-  } else {
-    const parentElement = getParentElement(currentElement)
-    const currentVal = Object.values(focusable[currentIndex])[1].value
-    if (
-      parentElement &&
-      parentElement.classList.contains('choice') &&
-      focusable.length
-    ) {
+  const isNoRightInput = noRightInput(currentIndex)
+  /* istanbul ignore else */
+  if (focusable.length) {
+    if (isNoRightInput) {
       focusable[mod(currentIndex + 1, focusable.length)].focus()
-    } else if (
-      currentVal &&
-      currentVal === 'arrowControls' &&
-      focusable.length
-    ) {
-      focusable[mod(currentIndex + 1, focusable.length)].focus()
-    } else if (nextButton) {
-      nextButton.click()
+    } else {
+      let currentVal = Object.values(focusable[currentIndex])[1].value
+      if (currentVal === 'arrowControls') {
+        let nextIndex = findRightInput(currentIndex)
+        focusable[mod(nextIndex, focusable.length)].focus()
+      }
     }
-    noparent = true
   }
 }
+
+// function handleArrowRight() {
+//   const focusable = getFocusableElements()
+//   const currentIndex = focusable.indexOf(getActiveElement())
+//   const currentElement = focusable[currentIndex]
+//   const nextButton = document.getElementById('next') as HTMLButtonElement
+//   let noparent = noParent(currentElement)
+
+//   if (noparent && nextButton) {
+//     nextButton.click()
+//   } else {
+//     const parentElement = getParentElement(currentElement)
+//     const currentVal = Object.values(focusable[currentIndex])[1].value
+//     if (
+//       parentElement &&
+//       parentElement.classList.contains('choice') &&
+//       focusable.length
+//     ) {
+//       focusable[mod(currentIndex + 1, focusable.length)].focus()
+//     } else if (
+//       currentVal &&
+//       currentVal === 'arrowControls' &&
+//       focusable.length
+//     ) {
+//       focusable[mod(currentIndex + 1, focusable.length)].focus()
+//     } else if (nextButton) {
+//       nextButton.click()
+//     }
+//     noparent = true
+//   }
+// }
 
 // function handleClick() {
 //   getActiveElement().click()
