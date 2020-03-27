@@ -714,14 +714,14 @@ class RankContest extends React.Component<Props, State> {
             <Prose aria-hidden="false" id="audiofocus">
               <h1
                 aria-label={`${contest.title}.`}
-                className="focusable findfocus"
+                className="focusable"
                 tabIndex={-1}
               >
                 <ContestSection>{contest.section}</ContestSection>
                 {contest.title}
               </h1>
               <p
-                className="focusable"
+                className="focusable findfocus"
                 tabIndex={-1}
                 aria-label={`Vote for ${contest.seats}. You have selected ${
                   vote.length
@@ -749,7 +749,7 @@ class RankContest extends React.Component<Props, State> {
               fullWidth
               onClick={this.scrollContestChoices}
             >
-              ↑ See More
+              ↑ See more
             </Button>
           </ContentHeader>
           <VariableContentContainer
@@ -913,7 +913,7 @@ class RankContest extends React.Component<Props, State> {
               fullWidth
               onClick={this.scrollContestChoices}
             >
-              ↓ See More
+              ↓ See more
             </Button>
             <ButtonContainer>
               <LinkButton
