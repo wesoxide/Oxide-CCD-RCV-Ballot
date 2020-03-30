@@ -124,7 +124,7 @@
   ],
   "precincts": [
     {
-      "id": "25",
+      "id": "26",
       "name": "Center Springfield"
     },
     {
@@ -139,7 +139,7 @@
   "ballotStyles": [
     {
       "id": "12",
-      "precincts": ["25", "21"],
+      "precincts": ["26", "21"],
       "districts": ["district-1", "district-2"]
     },
     {
