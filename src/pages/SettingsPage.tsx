@@ -47,9 +47,6 @@ const SettingsPage = () => {
   }
   const requestResetBallot = () => {
     resetBallot()
-  }
-  const requestNewBallot = () => {
-    Object.keys(votes).length === 0 ? resetBallot() : setResetBallotAlert(true)
     localStorage.clear()
     caches.keys().then(function(keyList) {
       return Promise.all(
@@ -58,6 +55,22 @@ const SettingsPage = () => {
         })
       )
     })
+  }
+  const hardResetBallout = () => {
+    resetBallot()
+    localStorage.clear()
+    caches.keys().then(function(keyList) {
+      return Promise.all(
+        keyList.map(function(key) {
+          return caches.delete(key)
+        })
+      )
+    })
+  }
+  const requestNewBallot = () => {
+    Object.keys(votes).length === 0
+      ? hardResetBallout()
+      : setResetBallotAlert(true)
   }
   // const onFontSizeChange = (event: InputEvent) => {
   //   const target = event.target as HTMLInputElement
