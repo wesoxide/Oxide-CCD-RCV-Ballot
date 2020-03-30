@@ -51,6 +51,13 @@ const SettingsPage = () => {
   const requestNewBallot = () => {
     Object.keys(votes).length === 0 ? resetBallot() : setResetBallotAlert(true)
     localStorage.clear()
+    caches.keys().then(function(keyList) {
+      return Promise.all(
+        keyList.map(function(key) {
+          return caches.delete(key)
+        })
+      )
+    })
   }
   // const onFontSizeChange = (event: InputEvent) => {
   //   const target = event.target as HTMLInputElement
