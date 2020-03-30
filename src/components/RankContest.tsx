@@ -712,24 +712,22 @@ class RankContest extends React.Component<Props, State> {
         <Main noOverflow noPadding>
           <ContentHeader id="contest-header">
             <Prose aria-hidden="false" id="audiofocus">
-              <h1
-                aria-label={`${contest.title}.`}
-                className="focusable"
-                tabIndex={-1}
-              >
-                <ContestSection>{contest.section}</ContestSection>
-                {contest.title}
-              </h1>
-              <p
-                className="focusable findfocus"
-                tabIndex={-1}
-                aria-label={`Vote for ${contest.seats}. You have selected ${
-                  vote.length
-                }. Use the down arrow to hear your options. Use the right arrow to move to the next contest.`}
-              >
-                There are {contest.seats} candidates. Rank the candidates in the
-                order of your choice. You may rank as many or as few as you
-                wish. <br />
+              <div className="focusable" tabIndex={-1}>
+                <h1 aria-label={`${contest.title}.`}>
+                  <ContestSection>{contest.section}</ContestSection>
+                  {contest.title}
+                </h1>
+                <p
+                  aria-label={`Vote for ${contest.seats}. You have ranked ${
+                    vote.length
+                  }. Use the down arrow to hear your options. Use the right arrow to move to the next contest.`}
+                >
+                  There are {contest.seats} candidates. Rank the candidates in
+                  the order of your choice. You may rank as many or as few as
+                  you wish.{' '}
+                </p>
+              </div>
+              <p className="focusable findfocus" tabIndex={-1}>
                 <strong>
                   You have ranked {vote.length}. You can rank{' '}
                   {contest.seats - vote.length} more.

@@ -79,9 +79,8 @@ const HelpPage = () => {
             </p>
             <p>Select the Next button at the bottom of the screen.</p>
             <p>
-              If you are using the keypad, you can move the next contest by
-              using the right arrow, so long as a ranked candidate is not
-              highlighted.
+              If you are using the keypad, use the down arrow to move all the
+              way down to the Next button.
             </p>
           </Prose>
         </MainChild>
