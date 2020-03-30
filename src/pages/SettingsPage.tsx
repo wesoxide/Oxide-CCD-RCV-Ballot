@@ -48,24 +48,17 @@ const SettingsPage = () => {
   const requestResetBallot = () => {
     resetBallot()
     localStorage.clear()
-    caches.keys().then(function(keyList) {
-      return Promise.all(
-        keyList.map(function(key) {
-          return caches.delete(key)
-        })
-      )
-    })
   }
   const hardResetBallout = () => {
     resetBallot()
     localStorage.clear()
-    caches.keys().then(function(keyList) {
-      return Promise.all(
-        keyList.map(function(key) {
-          return caches.delete(key)
-        })
-      )
-    })
+    // caches.keys().then(function(keyList) {
+    //   return Promise.all(
+    //     keyList.map(function(key) {
+    //       return caches.delete(key)
+    //     })
+    //   )
+    // })
   }
   const requestNewBallot = () => {
     Object.keys(votes).length === 0
