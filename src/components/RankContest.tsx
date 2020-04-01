@@ -25,7 +25,7 @@ import {
   UpdateRankFunction,
 } from '../config/types'
 
-import { ReactComponent as RemoveRank } from '../images/remove-icon.svg'
+//import { ReactComponent as RemoveRank } from '../images/remove-icon.svg'
 import { ReactComponent as UpRank } from '../images/uprank.svg'
 import { ReactComponent as DownRank } from '../images/downrank.svg'
 
@@ -152,7 +152,7 @@ const ChoicesGrid = styled.div`
 const ChoiceContainer = styled.div`
   display: grid;
   grid-gap: 1rem;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(33, 1fr);
 `
 
 const Choice = styled('label')<{ isSelected: boolean }>`
@@ -165,10 +165,9 @@ const Choice = styled('label')<{ isSelected: boolean }>`
     0 0.0625rem 0.3125rem 0 rgba(0, 0, 0, 0.2);
   background: ${({ isSelected }) => (isSelected ? '#028099' : '#FFFFFF')};
   cursor: pointer;
-  width: 22.5rem;
   color: ${({ isSelected }) => (isSelected ? '#FFFFFF' : undefined)};
   transition: background 0.25s, color 0.25s;
-  grid-column: span 3;
+  grid-column: span 26;
   button& {
     text-align: left;
   }
@@ -254,9 +253,9 @@ const ChoiceInput = styled.input.attrs({
 const ButtonControlContainer = styled.div`
   display: grid;
   grid-gap: 1rem;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   align-items: center;
-  grid-column: span 1;
+  grid-column: span 6;
 
   button {
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
@@ -826,15 +825,6 @@ class RankContest extends React.Component<Props, State> {
                           </Choice>
                           {isChecked ? (
                             <ButtonControlContainer>
-                              <LinkButton
-                                value="arrowControls"
-                                id={candidate.id}
-                                disabled={!isChecked}
-                                onClick={this.handleCandidateFromVote}
-                                handleArrows
-                              >
-                                <RemoveRank />
-                              </LinkButton>
                               <LinkButton
                                 value="arrowControls"
                                 id={candidate.id}

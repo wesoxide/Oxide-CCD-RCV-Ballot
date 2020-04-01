@@ -69,6 +69,95 @@
   ],
   "contests": [
     {
+      "id": "governor",
+      "districtId": "district-1",
+      "type": "rank",
+      "section": "State of Hamilton",
+      "title": "Governor",
+      "seats": 13,
+      "candidates": [
+        {
+          "id": "okonjo",
+          "name": "Keon Okonjo",
+          "partyId": "5",
+          "rank": ""
+        },
+        {
+          "id": "agrawal",
+          "name": "Gupta Agrawal",
+          "partyId": "3",
+          "rank": ""
+        },
+        {
+          "id": "sidorov",
+          "name": "Linda Sidorov",
+          "partyId": "2",
+          "rank": ""
+        },
+        {
+          "id": "gonzalez",
+          "name": "Eduardo Gonzalez",
+          "partyId": "2",
+          "rank": ""
+        },
+        {
+          "id": "nkosi",
+          "name": "Bandile Nkosi",
+          "partyId": "4",
+          "rank": ""
+        },
+        {
+          "id": "frederick-sharp",
+          "name": "Frederick Sharp",
+          "partyId": "5",
+          "rank": ""
+        },
+        {
+          "id": "lopez",
+          "name": "Maria Lopez",
+          "partyId": "1",
+          "rank": ""
+        },
+        {
+          "id": "yang",
+          "name": "Barbara Yang",
+          "partyId": "6",
+          "rank": ""
+        },
+        {
+          "id": "althea-sharp",
+          "name": "Althea Sharp",
+          "partyId": "6",
+          "rank": ""
+        },
+        {
+          "id": "kahale",
+          "name": "Pania Kahale",
+          "partyId": "1",
+          "rank": ""
+        },
+        {
+          "id": "nilsson",
+          "name": "Wilma Nilsson",
+          "partyId": "5",
+          "rank": ""
+        },
+        {
+          "id": "greher",
+          "name": "Mike Greher",
+          "partyId": "4",
+          "rank": ""
+        },
+        {
+          "id": "franz",
+          "name": "Charlene Franz",
+          "partyId": "1",
+          "rank": ""
+        }
+      ],
+      "allowWriteIns": false
+    },
+    {
       "id": "mayor",
       "districtId": "district-1",
       "type": "rank",
@@ -120,11 +209,52 @@
         }
       ],
       "allowWriteIns": false
+    },
+    {
+      "id": "city-council",
+      "districtId": "district-1",
+      "type": "rank",
+      "section": "Local",
+      "title": "City Council",
+      "seats": 5,
+      "candidates": [
+        {
+          "id": "kirmani",
+          "name": "Azar Kirmani",
+          "partyId": "6",
+          "rank": ""
+        },
+        {
+          "id": "kirmani",
+          "name": "Kerry Kirmani",
+          "partyId": "3",
+          "rank": ""
+        },
+        {
+          "id": "suarez",
+          "name": "Jenny Suarez",
+          "partyId": "2",
+          "rank": ""
+        },
+        {
+          "id": "applegate",
+          "name": "Fred Applegate",
+          "partyId": "1",
+          "rank": ""
+        },
+        {
+          "id": "johnson",
+          "name": "Lee Johnson",
+          "partyId": "4",
+          "rank": ""
+        }
+      ],
+      "allowWriteIns": false
     }
   ],
   "precincts": [
     {
-      "id": "26",
+      "id": "27",
       "name": "Center Springfield"
     },
     {
@@ -139,7 +269,7 @@
   "ballotStyles": [
     {
       "id": "12",
-      "precincts": ["26", "21"],
+      "precincts": ["27", "21"],
       "districts": ["district-1", "district-2"]
     },
     {
