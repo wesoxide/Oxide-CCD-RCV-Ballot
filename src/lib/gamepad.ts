@@ -369,12 +369,22 @@ function handleArrowRight() {
 //   getActiveElement().click()
 // }
 
+// function checkIfPage(currentIndex: number) {
+//   const focusable = getFocusableElements()
+//   console.log(focusable[currentIndex])
+// }
+
 function handleClick() {
   const focusable = getFocusableElements()
   const currentIndex = focusable.indexOf(getActiveElement())
+  const currentId = focusable[currentIndex].id
   if (currentIndex > -1) {
     const currentVal = Object.values(focusable[currentIndex])[1].value
-    if (currentVal === 'arrowControls') {
+    if (
+      currentVal === 'arrowControls' ||
+      currentId === 'next' ||
+      currentId === 'back'
+    ) {
       getActiveElement().dispatchEvent(new Event('click'))
     } else {
       getActiveElement().click()
@@ -426,6 +436,8 @@ export /* istanbul ignore next - triggering keystrokes issue - https://github.co
       handleArrowRight()
       break
     case ']':
+      handleClick()
+      break
     case 'Enter':
       handleClick()
       break
