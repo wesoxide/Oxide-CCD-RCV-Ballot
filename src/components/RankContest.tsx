@@ -357,6 +357,8 @@ class RankContest extends React.Component<Props, State> {
   private scrollContainer = React.createRef<HTMLDivElement>()
 
   public componentDidMount() {
+    const startFocus = document.querySelector('.startfocus') as HTMLElement
+    startFocus.focus()
     this.updateContestChoicesScrollStates()
     window.addEventListener('resize', this.updateContestChoicesScrollStates)
     this.updateRanks()
@@ -711,7 +713,7 @@ class RankContest extends React.Component<Props, State> {
         <Main noOverflow noPadding>
           <ContentHeader id="contest-header">
             <Prose aria-hidden="false" id="audiofocus">
-              <div className="focusable" tabIndex={-1}>
+              <div className="focusable startfocus" tabIndex={-1}>
                 <h1 aria-label={`${contest.title}.`}>
                   <ContestSection>{contest.section}</ContestSection>
                   {contest.title}
