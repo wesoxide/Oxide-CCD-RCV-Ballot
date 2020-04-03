@@ -71,88 +71,75 @@
     {
       "id": "governor",
       "districtId": "district-1",
-      "type": "rank",
+      "type": "candidate",
       "section": "State of Hamilton",
       "title": "Governor",
-      "seats": 13,
+      "seats": 1,
       "candidates": [
         {
           "id": "okonjo",
           "name": "Keon Okonjo",
-          "partyId": "5",
-          "rank": ""
+          "partyId": "5"
         },
         {
           "id": "agrawal",
           "name": "Gupta Agrawal",
-          "partyId": "3",
-          "rank": ""
+          "partyId": "3"
         },
         {
           "id": "sidorov",
           "name": "Linda Sidorov",
-          "partyId": "2",
-          "rank": ""
+          "partyId": "2"
         },
         {
           "id": "gonzalez",
           "name": "Eduardo Gonzalez",
-          "partyId": "2",
-          "rank": ""
+          "partyId": "2"
         },
         {
           "id": "nkosi",
           "name": "Bandile Nkosi",
-          "partyId": "4",
-          "rank": ""
+          "partyId": "4"
         },
         {
           "id": "frederick-sharp",
           "name": "Frederick Sharp",
-          "partyId": "5",
-          "rank": ""
+          "partyId": "5"
         },
         {
           "id": "lopez",
           "name": "Maria Lopez",
-          "partyId": "1",
-          "rank": ""
+          "partyId": "1"
         },
         {
           "id": "yang",
           "name": "Barbara Yang",
-          "partyId": "6",
-          "rank": ""
+          "partyId": "6"
         },
         {
           "id": "althea-sharp",
           "name": "Althea Sharp",
-          "partyId": "6",
-          "rank": ""
+          "partyId": "6"
         },
         {
           "id": "kahale",
           "name": "Pania Kahale",
-          "partyId": "1",
-          "rank": ""
+          "partyId": "1"
         },
         {
           "id": "nilsson",
           "name": "Wilma Nilsson",
-          "partyId": "5",
-          "rank": ""
+          "partyId": "5"
         },
         {
           "id": "greher",
           "name": "Mike Greher",
-          "partyId": "4",
-          "rank": ""
+          "partyId": "4"
         },
         {
           "id": "franz",
           "name": "Charlene Franz",
-          "partyId": "1",
-          "rank": ""
+          "partyId": "1"
         }
       ],
       "allowWriteIns": false
@@ -254,7 +241,7 @@
   ],
   "precincts": [
     {
-      "id": "27",
+      "id": "28",
       "name": "Center Springfield"
     },
     {
@@ -269,7 +256,7 @@
   "ballotStyles": [
     {
       "id": "12",
-      "precincts": ["27", "21"],
+      "precincts": ["28", "21"],
       "districts": ["district-1", "district-2"]
     },
     {

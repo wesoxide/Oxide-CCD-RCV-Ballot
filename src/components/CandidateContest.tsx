@@ -38,7 +38,13 @@ const ContentHeader = styled.div`
   padding: 1rem 0.75rem 0.5rem;
   @media (min-width: ${tabletMinWidth}px) {
     padding: 1rem 1.5rem 0.5rem;
-    padding-left: 5rem;
+    > div {
+      padding-left: 3.5rem;
+    }
+
+    button {
+      margin-top: 0.5rem;
+    }
   }
 `
 const ContestSection = styled.div`
@@ -81,40 +87,9 @@ const VariableContentContainer = styled.div<ScrollShadows>`
     );
   }
 `
-const ScrollControls = styled.div`
-  display: none;
-  flex-direction: column;
-  justify-content: space-between;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  max-width: 35rem;
-  padding: 0.5rem 0.75rem 0.5rem 0;
-  padding-left: calc(100% - 7rem);
-  pointer-events: none;
-  & > * {
-    pointer-events: auto;
-  }
-  html[data-useragent*='Windows'] & {
-    margin-left: -17px; /* Windows Chrome scrollbar width */
-  }
-  @media (min-width: ${tabletMinWidth}px) {
-    display: flex;
-  }
-  @media (min-width: 840px) {
-    left: 50%;
-    margin-left: -420px;
-    padding-left: calc(840px - 7rem);
-    html[data-useragent*='Windows'] & {
-      margin-left: calc(-420px + -17px); /* Windows Chrome scrollbar width */
-    }
-  }
-`
 const ScrollContainer = styled.div`
   flex: 1;
-  overflow: auto;
+  overflow: hidden;
 `
 const ScrollableContentWrapper = styled.div<Scrollable>`
   margin: 0 auto;
@@ -122,10 +97,7 @@ const ScrollableContentWrapper = styled.div<Scrollable>`
   max-width: 35rem;
   padding: 0.5rem 0.5rem 1rem;
   @media (min-width: ${tabletMinWidth}px) {
-    padding-right: ${({ isScrollable }) =>
-      isScrollable
-        ? /* istanbul ignore next: Tested by Cypress */ '8rem'
-        : '1rem'};
+    padding-right: 1rem;
     padding-left: 1rem;
   }
 `
@@ -184,6 +156,16 @@ const ChoiceInput = styled.input.attrs({
   role: 'option',
 })`
   margin-right: 0.5rem;
+`
+
+const ContentFooter = styled.div`
+  margin: 0 auto;
+  width: 100%;
+  max-width: 35rem;
+  padding: 0.5rem 0.5rem;
+  @media (min-width: ${tabletMinWidth}px) {
+    padding: 0.5rem 1rem;
+  }
 `
 
 const WriteInCandidateForm = styled.div`
@@ -420,11 +402,17 @@ class CandidateContest extends React.Component<Props, State> {
         <Main noOverflow noPadding>
           <ContentHeader id="contest-header">
             <Prose id="audiofocus">
-              <h1 aria-label={`${contest.title}.`}>
+              <h1
+                className="focusable"
+                tabIndex={-1}
+                aria-label={`${contest.title}.`}
+              >
                 <ContestSection>{contest.section}</ContestSection>
                 {contest.title}
               </h1>
               <p
+                className="focusable"
+                tabIndex={-1}
                 aria-label={`Vote for ${contest.seats}. You have selected ${
                   vote.length
                 }. Use the down arrow to hear your options. Use the right arrow to move to the next contest.`}
@@ -433,6 +421,15 @@ class CandidateContest extends React.Component<Props, State> {
                 {vote.length}.
               </p>
             </Prose>
+            <Button
+              aria-hidden
+              data-direction="up"
+              disabled={isScrollAtTop}
+              fullWidth
+              onClick={this.scrollContestChoices}
+            >
+              ↑ See more
+            </Button>
           </ContentHeader>
           <VariableContentContainer
             showTopShadow={!isScrollAtTop}
@@ -532,27 +529,18 @@ class CandidateContest extends React.Component<Props, State> {
                 </ChoicesGrid>
               </ScrollableContentWrapper>
             </ScrollContainer>
-            {isScrollable /* istanbul ignore next: Tested by Cypress */ && (
-              <ScrollControls aria-hidden="true">
-                <Button
-                  aria-hidden
-                  data-direction="up"
-                  disabled={isScrollAtTop}
-                  onClick={this.scrollContestChoices}
-                >
-                  ↑ See More
-                </Button>
-                <Button
-                  aria-hidden
-                  data-direction="down"
-                  disabled={isScrollAtBottom}
-                  onClick={this.scrollContestChoices}
-                >
-                  ↓ See More
-                </Button>
-              </ScrollControls>
-            )}
           </VariableContentContainer>
+          <ContentFooter>
+            <Button
+              aria-hidden
+              data-direction="down"
+              disabled={isScrollAtBottom}
+              fullWidth
+              onClick={this.scrollContestChoices}
+            >
+              ↓ See more
+            </Button>
+          </ContentFooter>
         </Main>
         <Modal
           isOpen={!!attemptedOvervoteCandidate}

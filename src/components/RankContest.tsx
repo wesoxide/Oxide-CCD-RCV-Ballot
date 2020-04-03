@@ -49,7 +49,7 @@ const ContentHeader = styled.div`
   @media (min-width: ${tabletMinWidth}px) {
     padding: 1rem 1.5rem 0.5rem;
     > div {
-      padding-left: 4.5rem;
+      padding-left: 3.5rem;
     }
 
     button {
