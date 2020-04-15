@@ -65,6 +65,16 @@
       "id": "6",
       "name": "Independent",
       "abbrev": "I"
+    },
+    {
+      "id": "7",
+      "name": "Independence",
+      "abbrev": "In"
+    },
+    {
+      "id": "8",
+      "name": "Peoples",
+      "abbrev": "Pe"
     }
   ],
   "contests": [
@@ -94,7 +104,7 @@
         {
           "id": "gonzalez",
           "name": "Eduardo Gonzalez",
-          "partyId": "2"
+          "partyId": "7"
         },
         {
           "id": "nkosi",
@@ -104,42 +114,7 @@
         {
           "id": "frederick-sharp",
           "name": "Frederick Sharp",
-          "partyId": "5"
-        },
-        {
-          "id": "lopez",
-          "name": "Maria Lopez",
-          "partyId": "1"
-        },
-        {
-          "id": "yang",
-          "name": "Barbara Yang",
-          "partyId": "6"
-        },
-        {
-          "id": "althea-sharp",
-          "name": "Althea Sharp",
-          "partyId": "6"
-        },
-        {
-          "id": "kahale",
-          "name": "Pania Kahale",
-          "partyId": "1"
-        },
-        {
-          "id": "nilsson",
-          "name": "Wilma Nilsson",
-          "partyId": "5"
-        },
-        {
-          "id": "greher",
-          "name": "Mike Greher",
-          "partyId": "4"
-        },
-        {
-          "id": "franz",
-          "name": "Charlene Franz",
-          "partyId": "1"
+          "partyId": "8"
         }
       ],
       "allowWriteIns": false
@@ -241,7 +216,7 @@
   ],
   "precincts": [
     {
-      "id": "28",
+      "id": "29",
       "name": "Center Springfield"
     },
     {
@@ -256,7 +231,7 @@
   "ballotStyles": [
     {
       "id": "12",
-      "precincts": ["28", "21"],
+      "precincts": ["29", "21"],
       "districts": ["district-1", "district-2"]
     },
     {
