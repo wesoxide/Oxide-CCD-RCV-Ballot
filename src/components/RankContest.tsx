@@ -911,7 +911,7 @@ class RankContest extends React.Component<Props, State> {
                 data-direction="up"
                 onClick={this.toggleReorderByRank}
               >
-                <strong>Put in order</strong>
+                <strong>Show in your ranked order</strong>
               </LinkButton>
             </ButtonContainer>
           </ContentFooter>
