@@ -97,37 +97,6 @@ const VariableContentContainer = styled.div<ScrollShadows>`
     );
   }
 `
-// const ScrollControls = styled.div`
-//   display: none;
-//   flex-direction: column;
-//   justify-content: space-between;
-//   position: absolute;
-//   top: 0;
-//   bottom: 0;
-//   left: 0;
-//   width: 100%;
-//   max-width: 35rem;
-//   padding: 0.5rem 0.75rem 0.5rem 0;
-//   padding-left: calc(100% - 7rem);
-//   pointer-events: none;
-//   & > * {
-//     pointer-events: auto;
-//   }
-//   html[data-useragent*='Windows'] & {
-//     margin-left: -17px; /* Windows Chrome scrollbar width */
-//   }
-//   @media (min-width: ${tabletMinWidth}px) {
-//     display: flex;
-//   }
-//   @media (min-width: 840px) {
-//     left: 50%;
-//     margin-left: -420px;
-//     padding-left: calc(840px - 7rem);
-//     html[data-useragent*='Windows'] & {
-//       margin-left: calc(-420px + -17px); /* Windows Chrome scrollbar width */
-//     }
-//   }
-// `
 const ScrollContainer = styled.div`
   flex: 1;
   overflow: hidden;
@@ -692,10 +661,7 @@ class RankContest extends React.Component<Props, State> {
         return a.rank.localeCompare(b.rank)
       })
     }
-    // let isFullRanked = false
-    // if (contest.seats === vote.length) {
-    //   isFullRanked = true
-    // }
+
     const hasReachedMaxSelections = contest.seats === vote.length
     const {
       attemptedOvervoteCandidate,

@@ -33,16 +33,18 @@ const StartPage = () => {
           <React.Fragment />
         )}
         <Prose textCenter>
-          <h1 aria-label={`${title}.`}>{title}</h1>
-          <p aria-hidden="true">
-            {date}
-            <br />
-            {county.name}, {state}
-            <br />
-            Ballot Style {ballotStyleId}
-            <br />
-            Precinct {precinctId}
-          </p>
+          <div className="focusable findfocus" tabIndex={-1}>
+            <h1 aria-label={`${title}.`}>{title}</h1>
+            <p aria-hidden="true">
+              {date}
+              <br />
+              {county.name}, {state}
+              <br />
+              Ballot Style {ballotStyleId}
+              <br />
+              Precinct {precinctId}
+            </p>
+          </div>
           <p>
             <LinkButton
               primary

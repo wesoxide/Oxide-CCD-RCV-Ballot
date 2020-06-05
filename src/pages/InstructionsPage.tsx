@@ -22,10 +22,12 @@ const InstructionsPage = () => {
         <MainChild center id="audiofocus">
           <Breadcrumbs step={1} />
           <Prose textCenter>
-            <h1 aria-label="Mark your ballot.">Mark your ballot</h1>
-            <Text narrow>{`This ballot has ${
-              contests.length
-            } ${contestText}.`}</Text>
+            <div className="focusable findfocus" tabIndex={-1}>
+              <h1 aria-label="Mark your ballot.">Mark your ballot</h1>
+              <Text narrow>{`This ballot has ${
+                contests.length
+              } ${contestText}.`}</Text>
+            </div>
             <p>
               <LinkButton
                 primary

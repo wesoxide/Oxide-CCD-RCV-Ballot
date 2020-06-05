@@ -224,14 +224,16 @@ class SummaryPage extends React.Component<RouteComponentProps, State> {
           <MainChild center>
             <Breadcrumbs step={3} />
             <Prose textCenter className="no-print" id="audiofocus">
-              <h1 aria-label="Print your official ballot.">
-                Print your official ballot
-              </h1>
-              <Text narrow>
-                If you have reviewed your selections and you are done voting,
-                you are ready to print your official ballot.
-              </Text>
-              <span aria-label="First, press the down arrow, then" />
+              <div className="focusable findfocus" tabIndex={-1}>
+                <h1 aria-label="Print your official ballot.">
+                  Print your official ballot
+                </h1>
+                <Text narrow>
+                  If you have reviewed your selections and you are done voting,
+                  you are ready to print your official ballot.
+                </Text>
+                <span aria-label="First, press the down arrow, then" />
+              </div>
               <Button
                 primary
                 big
