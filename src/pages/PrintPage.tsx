@@ -265,25 +265,26 @@ class SummaryPage extends React.Component<RouteComponentProps, State> {
           content={
             <Prose id="modalaudiofocus">
               <Text center>
-                You may not make any changes after you print your ballot.
+                This is the end of this ranked choice voting demo.
               </Text>
-              <Text center>Do you want to print your ballot?</Text>
+              <Text center>
+                For more information, please visit us at the Ranked Choice
+                Voting Resource Center -{' '}
+                <a
+                  title="Rank Choice Voting"
+                  rel="noopener noreferrer"
+                  target="_blank"
+                  href="https://www.rankedchoicevoting.org/"
+                >
+                  rankedchoicevoting.org
+                </a>
+              </Text>
               <span aria-label="Use the down arrow to continue." />
             </Prose>
           }
           actions={
             <>
-              <Button
-                role="link"
-                aria-label="Use the select button to print your ballot."
-                primary
-                onClick={() => {
-                  this.print()
-                }}
-              >
-                Yes, print my ballot.
-              </Button>
-              <Button onClick={this.hideConfirm}>No, go back.</Button>
+              <Button onClick={this.hideConfirm}>Go back.</Button>
             </>
           }
         />
