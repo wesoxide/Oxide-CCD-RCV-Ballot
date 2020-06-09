@@ -33,7 +33,7 @@ const StartPage = () => {
           <React.Fragment />
         )}
         <Prose textCenter>
-          <div className="focusable findfocus" tabIndex={-1}>
+          <div className="focusable findfocus hasbutton" tabIndex={-1}>
             <h1 aria-label={`${title}.`}>{title}</h1>
             <p aria-hidden="true">
               {date}
@@ -44,17 +44,18 @@ const StartPage = () => {
               <br />
               Precinct {precinctId}
             </p>
+
+            <p>
+              <LinkButton
+                primary
+                to="/instructions/"
+                id="next"
+                aria-label="Select Next to start voting."
+              >
+                Start voting
+              </LinkButton>
+            </p>
           </div>
-          <p>
-            <LinkButton
-              primary
-              to="/instructions/"
-              id="next"
-              aria-label="Select Next to start voting."
-            >
-              Start voting
-            </LinkButton>
-          </p>
         </Prose>
       </MainChild>
     </Main>
