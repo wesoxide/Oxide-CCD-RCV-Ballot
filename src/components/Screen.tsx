@@ -17,7 +17,7 @@ class Screen extends React.Component<RouteComponentProps> {
   public componentDidMount() {
     this.focus()
     const startFocus = document.querySelector('.startfocus') as HTMLElement
-    if (startFocus !== undefined) {
+    if (document.body.contains(startFocus)) {
       startFocus.focus()
     }
   }
@@ -26,7 +26,7 @@ class Screen extends React.Component<RouteComponentProps> {
       this.focus()
     }
     const startFocus = document.querySelector('.startfocus') as HTMLElement
-    if (startFocus !== undefined) {
+    if (document.body.contains(startFocus)) {
       startFocus.focus()
     }
   }
