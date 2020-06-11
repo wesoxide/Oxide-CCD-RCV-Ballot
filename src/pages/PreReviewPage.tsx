@@ -18,24 +18,24 @@ const SummaryPage = () => {
         <MainChild center>
           <Breadcrumbs step={2} />
           <Prose textCenter id="audiofocus">
-            <div className="focusable hasbutton findfocus" tabIndex={-1}>
+            <div className="focusable hasbutton startfocus" tabIndex={-1}>
               <h1 aria-label="Review your selections.">
                 Review your selections
               </h1>
               <Text narrow>Confirm and change any votes as necessary.</Text>
               <div aria-label="Use the down arrow, then" />
-
-              <p>
-                <LinkButton
-                  primary
-                  big
-                  to="/review"
-                  aria-label="Use the select button to begin your review."
-                >
-                  Review selections
-                </LinkButton>
-              </p>
             </div>
+
+            <p>
+              <LinkButton
+                primary
+                big
+                to="/review"
+                aria-label="Use the select button to begin your review."
+              >
+                Review selections
+              </LinkButton>
+            </p>
           </Prose>
         </MainChild>
       </Main>

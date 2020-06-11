@@ -16,10 +16,18 @@ class Screen extends React.Component<RouteComponentProps> {
   public screen = React.createRef<HTMLDivElement>()
   public componentDidMount() {
     this.focus()
+    const startFocus = document.querySelector('.startfocus') as HTMLElement
+    if (startFocus !== undefined) {
+      startFocus.focus()
+    }
   }
   public componentDidUpdate(prevProps: RouteComponentProps) {
     if (this.props.location.pathname !== prevProps.location.pathname) {
       this.focus()
+    }
+    const startFocus = document.querySelector('.startfocus') as HTMLElement
+    if (startFocus !== undefined) {
+      startFocus.focus()
     }
   }
   public focus = () => {

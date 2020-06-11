@@ -144,7 +144,7 @@ class UploadConfig extends React.Component<Props, State> {
                 Download sample <code>election.json</code> file
               </a>{' '}
               to upload, or{' '}
-              <Button onClick={this.loadSampleElection}>
+              <Button className="startfocus" onClick={this.loadSampleElection}>
                 Load sample election file
               </Button>
             </Text>

@@ -224,7 +224,7 @@ class SummaryPage extends React.Component<RouteComponentProps, State> {
           <MainChild center>
             <Breadcrumbs step={3} />
             <Prose textCenter className="no-print" id="audiofocus">
-              <div className="focusable hasbutton findfocus" tabIndex={-1}>
+              <div className="focusable hasbutton startfocus" tabIndex={-1}>
                 <h1 aria-label="Print your official ballot.">
                   Print your official ballot
                 </h1>
@@ -233,16 +233,16 @@ class SummaryPage extends React.Component<RouteComponentProps, State> {
                   you are ready to print your official ballot.
                 </Text>
                 <span aria-label="First, press the down arrow, then" />
-
-                <Button
-                  primary
-                  big
-                  onClick={this.showConfirm}
-                  aria-label="Use the select button to print your ballot."
-                >
-                  Print ballot
-                </Button>
               </div>
+
+              <Button
+                primary
+                big
+                onClick={this.showConfirm}
+                aria-label="Use the select button to print your ballot."
+              >
+                Print ballot
+              </Button>
             </Prose>
           </MainChild>
         </Main>

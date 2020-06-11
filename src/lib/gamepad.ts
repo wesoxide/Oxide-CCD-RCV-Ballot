@@ -130,13 +130,14 @@ const getActiveElement = () => document.activeElement! as HTMLInputElement
 function handleArrowUp() {
   const focusable = getFocusableElements()
   const currentIndex = focusable.indexOf(getActiveElement())
-  const currentVal = Object.values(focusable[currentIndex])[1].value
+  //const currentVal = Object.values(focusable[currentIndex])[1].value
   const prevIndex = mod(currentIndex - 1, focusable.length)
   const prevVal = Object.values(focusable[prevIndex])[1].value
   /* istanbul ignore else */
-  if (currentVal === 'arrowControls') {
-    focusable[mod(currentIndex, focusable.length)].focus()
-  } else if (prevVal === 'arrowControls') {
+  // if (currentVal === 'arrowControls') {
+  //   focusable[mod(currentIndex, focusable.length)].focus()
+  // } else
+  if (prevVal === 'arrowControls') {
     focusable[mod(findPrevInput(currentIndex), focusable.length)].focus()
   } else if (focusable.length) {
     if (currentIndex > -1) {
@@ -150,7 +151,7 @@ function handleArrowUp() {
 function handleArrowDown() {
   const focusable = getFocusableElements()
   const currentIndex = focusable.indexOf(getActiveElement())
-  const currentVal = Object.values(focusable[currentIndex])[1].value
+  //const currentVal = Object.values(focusable[currentIndex])[1].value
   /* istanbul ignore else */
   const nextIndex = mod(currentIndex + 1, focusable.length)
   let currentId
@@ -164,9 +165,10 @@ function handleArrowDown() {
     )[1].id
   }
   const nextId = Object.values(focusable[nextIndex])[1].id
-  if (currentVal === 'arrowControls') {
-    focusable[mod(currentIndex, focusable.length)].focus()
-  } else if (focusable.length > 1 && currentId === nextId) {
+  // if (currentVal === 'arrowControls') {
+  //   focusable[mod(currentIndex, focusable.length)].focus()
+  // } else
+  if (focusable.length > 1 && currentId === nextId) {
     if (currentId) {
       focusable[mod(findNextInput(currentIndex), focusable.length)].focus()
     } else if (focusable.length) {
